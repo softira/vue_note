@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>何为数据代理</title>
+</head>
+
+<body>
+  <!-- IMPROT JS -->
+  <script>
+    // 数据代理：通过一个对象代理对另一个对象中属性的操作（读/写）
+    let obj1 = {
+      x: 100
+    };
+    let obj2 = {
+      y: 100
+    };
+    Object.defineProperty(obj2, 'x', {
+      get: function () {
+        return obj1.x;
+      },
+      set: function (value) {
+        obj1.x = value;
+      }
+    })
+  </script>
+</body>
+
+</html>

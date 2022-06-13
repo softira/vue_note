@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>列表过滤</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+</head>
+<style>
+  #root {
+    width: 300px;
+    padding: 10px;
+    background: #ccc;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+</style>
+
+<body>
+  <!-- 
+    
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <input type="text" placeholder="过滤" v-model="keyWord">
+    <ul>
+      <li v-for="val in filters" :key="val.id">
+        {{val.name}}-{{val.age}}
+      </li>
+      <br>
+      <br>
+      <li v-for="val in filters2" :key="val.id + 5">
+        {{val.name}}-{{val.age}}
+      </li>
+    </ul>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    // 创建一个 Vue 实例
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        persons: [{
+            id: '01',
+            name: 'a哥',
+            age: 18
+          },
+          {
+            id: '02',
+            name: 'e哥',
+            age: 19
+          },
+          {
+            id: '03',
+            name: 'e总',
+            age: 20
+          },
+          {
+            id: '04',
+            name: '张总',
+            age: 21
+          },
+        ],
+        keyWord: '',
+        filters: []
+      },
+      // watch实现
+      watch: {
+        keyWord: {
+          immediate: true,
+          handler(val) {
+            this.filters = this.persons.filter((p) => p.name.indexOf(val) !== -1);
+          }
+        }
+      },
+
+      // computed实现
+      computed: {
+        filters2() {
+          return this.persons.filter((p) => {
+            return p.name.indexOf(this.keyWord) !== -1;
+          });
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

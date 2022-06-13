@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>模拟数据监测</title>
+  <!-- IMPORT Vue -->
+  <!-- <script src="../js/vue.js"></script> -->
+</head>
+<style>
+  #root {
+    width: 300px;
+    padding: 10px;
+    background: #ccc;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+</style>
+
+<body>
+  <!-- 
+    
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    let data = {
+      name: '张三',
+      age: 18,
+    }
+
+    let obs = new observer(data);
+
+    let vm = data = obs;
+
+    function observer(data) {
+      let keys = Object.keys(data);
+      keys.forEach((k) => {
+        Object.defineProperty(this, k, {
+          get() {
+            return data[k];
+          },
+          set(val) {
+            data[k] = val;
+          }
+        })
+      });
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>事件修饰符</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+</head>
+<style>
+  .demo {
+    background: lightblue;
+    padding: 10px;
+  }
+</style>
+
+<body>
+  <!-- 
+    Vue中的事件修饰符：
+      1.prevent：阻止事件的默认行为；
+      2.stop：阻止事件冒泡；
+      3.once：事件只能触发一次；
+      4.capture：事件只能在捕获阶段触发；
+      5.self：只有event.target是当前操作的元素时才触发事件；
+      6.passive：事件的默认行为立即执行，无需等待事件回调执行完毕；
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <h2>{{message}}</h2>
+    <hr />
+    <!-- 阻止默认事件 -->
+    <a :href="url" @click.prevent="showInfo">百度</a>
+    <hr />
+    <!-- 阻止事件冒泡 -->
+    <div class="demo" @click="showInfo">
+      <button @click.stop="showInfo">提示</button>
+      <a :href="url" @click.prevent.stop="showInfo">百度</a>
+    </div>
+    <hr />
+    <!-- 事件只触发一次 -->
+    <button @click.once="showInfo">提示</button>
+    <hr />
+    <!-- 使用事件的捕获模式 -->
+    <div class="demo" @click.capture="showMsg(1)">
+      <button @click="showMsg(2)">提示</button>
+    </div>
+    <hr />
+    <!-- 只有event.target是当前操作的元素时才触发事件 -->
+    <div class="demo" @click.self="showMsg(1)">
+      <button @click="showMsg(2)">提示</button>
+    </div>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    // 创建一个 Vue 实例
+    new Vue({
+      el: '#root',
+      data: {
+        message: 'Hello Vue!',
+        url: 'https://www.baidu.com'
+      },
+      methods: {
+        showInfo(e) {
+          // e.preventDefault();
+          alert('提示');
+        },
+        showMsg(num) {
+          alert('提示' + num);
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue.set()</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+</head>
+<style>
+  #root {
+    width: 300px;
+    padding: 10px;
+    background: #ccc;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+</style>
+
+<body>
+  <!-- 
+    
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <h3>info</h3>
+    <button @click="addSex">addSex</button>
+    <h3>name:{{student.name}}</h3>
+    <h3>age:{{student.age}}</h3>
+    <h3 v-if="student.sex">sex:{{student.sex}}</h3>
+    <h3>friends</h3>
+    <ul>
+      <li v-for="(k,index) in student.friends" :key="index">
+        {{k.name}}--{{k.age}}
+      </li>
+    </ul>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        student: {
+          name: '张三',
+          age: 18,
+          friends: [{
+            name: '李四',
+            age: 20
+          }, {
+            name: '王五',
+            age: 22
+          }]
+        },
+      },
+      methods: {
+        addSex() {
+          // Vue.set(this.student,'sex','male')
+          this.$set(this.student,'sex','male')
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

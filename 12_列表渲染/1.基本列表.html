@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>基本列表</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+</head>
+<style>
+  #root {
+    width: 300px;
+    padding: 10px;
+    background: #ccc;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+</style>
+
+<body>
+  <!-- 
+    v-for指令
+      1.用于展示列表数据
+      2.语法：v-for="(item,index) in list" :key="xxx"   
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <!-- 遍历数组：value,index两个值 -->
+    <ul>
+      <li v-for="(a,b,c,d) in persons" :key="a.id">
+        {{a.name}}-{{a.age}}-{{b}}-{{c}}-{{d}}
+      </li>
+      <li v-for="(val,index) of persons" :key="index">
+        {{val.name}}-{{val.age}}
+      </li>
+    </ul>
+    <!-- 遍历对象：value,key两个值 -->
+    <ul>
+      <li v-for="(a,b) in car" :key="b">
+        {{a}}-{{b}}
+      </li>
+    </ul>
+    <!-- 遍历字符串：char,index两个值 -->
+    <ul>
+      <li v-for="(a,b) in str" :key="b">
+        {{a}}-{{b}}
+      </li>
+    </ul>
+    <!-- 遍历指定次数：number,index两个值 -->
+    <ul>
+      <li v-for="(a,b) in 5" :key="b">
+        {{a}}-{{b}}
+      </li>
+    </ul>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    // 创建一个 Vue 实例
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        persons: [{
+            id: '01',
+            name: '张三',
+            age: 18
+          },
+          {
+            id: '02',
+            name: '张三',
+            age: 19
+          },
+          {
+            id: '03',
+            name: '张三',
+            age: 20
+          },
+        ],
+        car: {
+          '01': '铃木',
+          '02': '川崎',
+        },
+        str: 'gsx250r',
+      },
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>非单文件组件</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+  <style>
+    #root {
+      width: 300px;
+      padding: 10px;
+      background: #ccc;
+      margin: 0 auto;
+      margin-top: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 
+    几个主意点
+      1.关于组件名：
+        一个单词组成：
+          第一种写法（首字母小写）
+          第二种写法（首字母大写）
+        多个单词组成：
+          第一种写法（kebab-case）
+          第二种写法（CamelCase）
+        备注：
+          1.组件名尽可能回避HTML中已有的元素名称，例如：h2、H2都不行
+          2.可以使用name配置项指定组件在开发者工具中呈现的名字
+      
+      2.关于组件标签：
+        第一种写法：<school></school>
+        第二种写法：<school />
+        备注：不使用脚手架时，第二种写法会导致后续组件不能渲染
+
+      3.一个简写方法：
+        const school = Vue.extend(options) 可简写为：const school = options
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <school></school>
+    <school />
+  </div>
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    // 第一步：创建school组件
+    const school = Vue.extend({
+      name:'xuexiao',
+      template: `
+        <div>
+          <h2>name:{{name}}</h2>
+          <p>address:{{address}}</p>
+        </div>
+      `,
+      data() {
+        return {
+          name: 'cqnu',
+          address: 'cq'
+        }
+      }
+    })
+
+
+    // 创建一个 Vue 实例
+    new Vue({
+      el: '#root',
+      components: {
+        school
+      }
+    })
+  </script>
+</body>
+
+</html>

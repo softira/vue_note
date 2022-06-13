@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>key的原理</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+</head>
+<style>
+  #root {
+    width: 300px;
+    padding: 10px;
+    background: #ccc;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+</style>
+
+<body>
+  <!-- 
+    面试题：react、vue中的key有什么作用？（key的内部原理）
+      1.虚拟DOM中key的作用：
+        key是虚拟对象的标识，当状态中的数据发生变化时，Vue会根据【新数据】生成【新的虚拟DOM】，随后Vue进行【新虚拟DOM】和【旧虚拟DOM】的对比，找出变化的虚拟DOM，并更新到页面上。
+      2.对比规则
+        1.旧虚拟DOM中找到了与新虚拟DOM相同的key
+          1.若虚拟DOM中内容没变，直接使用之前的真实DOM
+          2.若虚拟DOM中内容变了，则需要更新真实DOM，并将新的真实DOM替换掉页面中旧的真实DOM
+        2.旧虚拟DOM中没找到与新虚拟DOM相同的key
+          创建新的真实DOM，随后渲染到页面上
+      3.用index作为key可能引发的问题：
+        1.若对数据进行：逆序添加、逆序删除等破坏顺序的操作，会产生没有必要的真实DOM更新==>界面效果没问题，但效率低
+        2.如果结构中还包含输入类的DOM：会产生错误DOM更新==>界面有问题
+      4.开发中如何选择key？：
+        1.给key设置一个值，且这个值唯一
+        2.如果不设置key，则默认为index
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <ul>
+      <li v-for="(a,b) in persons" :key="b">
+        {{a.name}}-{{a.age}} <input type="text">
+      </li>
+    </ul>
+    <ul>
+      <li v-for="(a,b) in persons" :key="a.id">
+        {{a.name}}-{{a.age}} <input type="text">
+      </li>
+    </ul>
+    <button @click="add">add</button>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    // 创建一个 Vue 实例
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        persons: [{
+            id: '01',
+            name: '张三',
+            age: 18
+          },
+          {
+            id: '02',
+            name: '张三',
+            age: 19
+          },
+          {
+            id: '03',
+            name: '张三',
+            age: 20
+          },
+        ],
+      },
+      methods: {
+        add() {
+          const p = {
+            id: '04',
+            name: '张三',
+            age: 21
+          }
+          this.persons.unshift(p);
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

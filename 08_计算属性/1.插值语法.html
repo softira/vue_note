@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>姓名案例_插值语法</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+</head>
+<style>
+
+</style>
+
+<body>
+  <!-- 
+    
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <p>姓<input type="text" v-model="firstName"></p>
+    <p>名<input type="text" v-model="lastName"></p>
+    <p>姓名<span>{{firstName}}-{{lastName}}</span></p>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    // 创建一个 Vue 实例
+    new Vue({
+      el: '#root',
+      data: {
+        firstName: '',
+        lastName: ''
+      }
+    })
+  </script>
+</body>
+
+</html>

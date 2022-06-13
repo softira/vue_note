@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>MVVM模型</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+</head>
+
+<body>
+  <!-- 
+    MVVM模型
+      1.M：模型(Model)：data中的数据
+      2.V：视图(View)：el中的DOM元素
+      3.VM：视图模型(ViewModel)：Vue实例，V和M的结合，把V和M的数据绑定在一起
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <h1>{{message}}</h1>
+  </div>
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    // 创建一个 Vue 实例
+    new Vue({
+      el: '#root',
+      data: {
+        message: 'Hello Vue.js!',
+      }
+    })
+  </script>
+</body>
+
+</html>

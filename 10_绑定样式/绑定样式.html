@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>绑定样式</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+</head>
+<style>
+  .demo {
+    border: 1px solid #000;
+    height: 100px;
+    width: 100px;
+    margin: 20px auto;
+  }
+
+  .happy {
+    background-color: #ff0;
+  }
+
+  .sad {
+    background-color: #f00;
+  }
+
+  .normal {
+    background-color: #eee;
+  }
+
+  .demo1 {
+    border-radius: 20px;
+  }
+
+  .demo2 {
+    box-shadow: 0 0 5px black;
+  }
+
+  .demo3 {
+    font-size: 20px;
+  }
+</style>
+
+<body>
+  <!-- 
+    
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <!-- 绑定class样式--字符串写法，适用于：样式的类名不确定，需要动态指定 -->
+    <div class="demo" :class="mood" @click="changeMood">{{msg}}</div>
+
+    <!-- 绑定class样式--数组写法，适用于：样式的个数不确定，名字也不确定 -->
+    <div class="demo" :class="arr">{{msg}}</div>
+
+    <!-- 绑定class样式--对象写法，适用于：样式的个数确定，名字确定，动态决定用不用 -->
+    <div class="demo" :class="obj">{{msg}}</div>
+    
+    <div class="demo" :style="{fontSize: fsize + 'px'}">{{msg}}</div>
+
+    <div class="demo" :style="obj2">{{msg}}</div>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    // 创建一个 Vue 实例
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        msg: 'hello',
+        mood: '',
+        arr: ['demo1', 'demo2', 'demo3'],
+        obj: {
+          demo1: false,
+          demo2: true,
+        },
+        fsize: 60,
+        obj2: {
+          fontSize: '60px'
+        }
+      },
+      methods: {
+        changeMood() {
+          const arr = ['happy', 'sad', 'normal'];
+          const index = Math.floor(Math.random() * arr.length);
+          this.mood = arr[index];
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue中的数据代理</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+</head>
+
+<body>
+  <!-- 
+    1.Vue中的数据代理：
+      通过vm对象来代理data对象中属性的操作（读/写）
+    2.Vue中数据代理的好处：
+      更加方便的操作data中的数据
+    3.基本原理：
+      通过Object.defineProperty()方法，将data中的属性代理到vm对象上
+      为每个添加到vm上的属性，都指定一个getter和setter方法
+      在getter/setter内部去调用data中的属性，实现数据的读/写
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <h1>{{message}}</h1>
+    <h1>{{_data.message}}</h1>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    // 创建一个 Vue 实例
+    new Vue({
+      el: '#root',
+      data: {
+        message: 'Hello Vue.js!'
+      }
+    })
+  </script>
+</body>
+
+</html>

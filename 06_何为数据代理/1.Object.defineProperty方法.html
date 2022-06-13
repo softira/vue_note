@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Object.defineProperty方法</title>
+</head>
+
+<body>
+  <!-- IMPROT JS -->
+  <script>
+    let num = 18;
+    let person = {
+      name: '张三',
+      sex: '男',
+    }
+
+    Object.defineProperty(person, 'age', {
+      // value: num,
+      // enumerable: true, // 控制属性是否可以枚举（遍历），默认值是false
+      // writable: true, // 控制属性是否可以被修改，默认值是false
+      // configurable: true // 控制属性是否可以被删除，默认值是false
+
+      // 当有人读取person的age属性时，就会调用get函数（getter），且返回值是age的值
+      get: function () {
+        return num;
+      },
+
+      // 当有人修改person的age属性时，就会调用set函数（setter），且会收到修改的值
+      set: function (value) {
+        num = value;
+      }
+    })
+  </script>
+</body>
+
+</html>

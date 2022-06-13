@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>姓名案例_计算属性</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+</head>
+<style>
+
+</style>
+
+<body>
+  <!-- 
+
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <p>姓<input type="text" v-model="firstName"></p>
+    <p>名<input type="text" v-model="lastName"></p>
+    <p>姓名<span>{{fullName}}</span></p>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    // 创建一个 Vue 实例
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        firstName: '',
+        lastName: ''
+      },
+      computed: {
+        // 当确定不修改只读属性时，可以使用这种简写
+        fullName() {
+          return this.firstName + '-' + this.lastName;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

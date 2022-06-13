@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>模板语法</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+</head>
+
+<body>
+  <!-- 
+    Vue模板语法有2大类：
+      1.插值语法：
+        功能：用于解析标签体内容
+        写法：{{xxx}}，且xxx是js表达式，可以自动读取到data中所有属性
+      2.指令语法：
+        功能：用于解析标签（包括：标签属性、标签体内容、绑定事件...）
+        举例：v-on:click="xxx"，且xxx是js表达式，可以自动读取到data中所有属性
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <h1>插值语法</h1>
+    <h3>{{message}}</h3>
+    <hr />
+    <h1>指令语法</h1>
+    <a v-bind:href="url.toUpperCase()">百度</a>
+    <a :href="url">百度</a>
+    <a :href="Date.now()">百度</a>
+  </div>
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    // 创建一个 Vue 实例
+    new Vue({
+      el: '#root',
+      data: {
+        message: 'Hello Vue.js!',
+        url: 'https://www.baidu.com'
+      }
+    })
+  </script>
+</body>
+
+</html>

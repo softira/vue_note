@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>列表排序</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+</head>
+<style>
+  #root {
+    width: 300px;
+    padding: 10px;
+    background: #ccc;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+</style>
+
+<body>
+  <!-- 
+    
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <input type="text" placeholder="过滤" v-model="keyWord">
+    <br />
+    <button @click="sortType = 1">年龄升序</button>
+    <button @click="sortType = 2">年龄降序</button>
+    <button @click="sortType = 0">原顺序</button>
+    <ul>
+      <li v-for="val in filters2" :key="val.id">
+        {{val.name}}-{{val.age}}
+      </li>
+    </ul>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    // 创建一个 Vue 实例
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        persons: [{
+            id: '01',
+            name: 'a哥',
+            age: 18
+          },
+          {
+            id: '02',
+            name: 'e哥',
+            age: 19
+          },
+          {
+            id: '03',
+            name: 'e总',
+            age: 22
+          },
+          {
+            id: '04',
+            name: '张总',
+            age: 21
+          },
+        ],
+        keyWord: '',
+        sortType: 0, // 0: 原顺序 1: 年龄升序 2: 年龄降序
+      },
+
+      // computed实现
+      computed: {
+        filters2() {
+          const arr = this.persons.filter((p) => {
+            return p.name.indexOf(this.keyWord) !== -1;
+          });
+          if (this.sortType) {
+            arr.sort((a, b) => this.sortType === 1 ? a.age - b.age : b.age - a.age);
+          }
+          return arr;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

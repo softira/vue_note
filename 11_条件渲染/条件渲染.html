@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>条件渲染</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+</head>
+<style>
+  #root {
+    width: 300px;
+    height: 300px;
+    background: #ccc;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+</style>
+
+<body>
+  <!-- 
+    条件渲染：
+      1.v-if
+        写法：v-if="表达式" v-else-if="表达式" v-else
+        适用于：切换频率较低的场景
+        特点：不展示的DOM元素直接被移除
+        注意：v-if和v-else-if、v-else一起使用，但结构不能被打断
+      2.v-show
+        写法：v-show="表达式"
+        适用于：切换频率较高的场景
+        特点：不展示的DOM元素未被移除，仅仅是使用样式隐藏
+      3.备注：使用v-if时，元素可能无法获取到，而使用v-show一定可以获取到
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <!-- 使用v-show做条件渲染 -->
+    <h3 v-show="false">{{msg}}</h3>
+    <h3 v-show="1 === 1">{{msg}}</h3>
+
+    <!-- 使用v-if做条件渲染 -->
+    <h3 v-if="false">{{msg}}</h3>
+    <h3 v-if="1 === 1">{{msg}}</h3>
+
+    <h3>n:{{n}}</h3>
+    <button @click="n++">n++</button>
+
+    <!-- 使用v-if、v-else-if、v-else做条件渲染 -->
+    <div v-if="n === 1">1</div>
+    <div v-if="n === 2">2</div>
+    <!--  -->
+    <div style="color: red;" v-if="n === 3">3</div>
+    <div style="color: red;" v-else-if="n === 4">4</div>
+    <div style="color: red;" v-else>5</div>
+
+    <!-- template只能配合v-if使用，不能和v-show使用；template不影响DOM结构 -->
+    <template v-if="n === 6">
+      <h2>6</h2>
+      <h2>6</h2>
+      <h2>6</h2>
+    </template>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    // 创建一个 Vue 实例
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        msg: 'hello',
+        n: 1,
+      },
+    })
+  </script>
+</body>
+
+</html>

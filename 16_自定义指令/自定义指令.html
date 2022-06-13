@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>自定义指令</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+  <script src="../js/dayjs.min.js"></script>
+</head>
+<style>
+  #root {
+    width: 300px;
+    padding: 10px;
+    background: #ccc;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+</style>
+
+<body>
+  <!-- 
+    自定义指令总结：
+      1.定义语法：
+        1.局部指令：new Vue({directives:{指令名:配置对象}})或new Vue({directives:{指令名:回调函数}})
+        2.全局指令：Vue.directive(指令名,配置对象) 或 Vue.directive(指令名,回调函数)
+      2.配置对象中常用的3个回调
+        1.bind：指令与元素成功绑定时调用
+        2.inserted：指令所在元素被插入页面时调用
+        3.update：指令所在模板结构被重新解析时调用
+      3.备注：
+        1.指令定义时不加v-前缀，但使用时要加v-前缀
+        2.指令名如果是多个单词，要使用kebab-case命名方式
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <div>
+      <p>n:<span v-text="n"></span></p>
+      <p>n * 10:<span v-big-num="n"></span></p>
+      <hr />
+      <input type="text" v-fbind:value="n">
+      <input type="text" v-fbind2:value="n">
+      <hr />
+      <button @click="n++">n++</button>
+    </div>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+    Vue.directive('fbind2', {
+      bind(element, binding) {
+        console.log('fbind2-bind', this);
+        element.value = binding.value;
+      },
+      inserted(element, binding) {
+        element.focus();
+      },
+      update(element, binding) {
+        element.value = binding.value;
+      },
+    })
+
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        n: 1,
+      },
+      directives: {
+        // big函数何时被调用？
+        // 1.指令与元素成功绑定时（一上来）
+        // 2.指令所在的模板被重新解析时
+        // bigNum(element, binding) 也可以
+        'big-num'(element, binding) {
+          console.log('bigNum', this); // 所有指令函数this指向都是window
+          element.innerHTML = binding.value * 10;
+        },
+
+        fbind: {
+          bind(element, binding) {
+            console.log('fbind-bind', this);
+            element.value = binding.value;
+          },
+          inserted(element, binding) {
+            element.focus();
+          },
+          update(element, binding) {
+            element.value = binding.value;
+          },
+        },
+      }
+    })
+  </script>
+</body>
+
+</html>

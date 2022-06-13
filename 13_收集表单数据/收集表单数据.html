@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>收集表单数据</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+</head>
+<style>
+  #root {
+    width: 300px;
+    padding: 10px;
+    background: #ccc;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+</style>
+
+<body>
+  <!-- 
+    收集表单数据：
+    若：<input type="text"/>。则v-model收集的就是value的值，用户输入的就是value的值。
+    若：<input type="radio"/>。则v-model收集的就是value的值，切要给标签配置value值。
+    若：<input type="checkbox"/>。
+      1.没有配置input的value属性，那么收集的就是checked
+      2.配置了input的value属性：
+        v-model的初始值是非数组，则收集的就是checked
+        v-model的初始值是数组，则收集的就是value组成的数组
+    备注：v-model的三个修饰符：
+      lazy：失去焦点再收集数据
+      trim：去除前后空格
+      number：转换为数字
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <form @submit.prevent="demo">
+      <div>account: <input type="text" v-model="info.account"></div>
+      <div>password: <input type="password" v-model="info.password"></div>
+      <div>phone: <input type="number" v-model.number="info.phone"></div>
+      <div>
+        sex:
+        male<input type="radio" name="sex" v-model="info.sex" value="male">
+        female<input type="radio" name="sex" v-model="info.sex" value="female">
+      </div>
+      <div>
+        hobby:
+        smoke: <input type="checkbox" v-model="info.hobby" value="smoke">
+        drink: <input type="checkbox" v-model="info.hobby" value="drink">
+        perm: <input type="checkbox" v-model="info.hobby" value="perm">
+      </div>
+      <div>
+        address:
+        <select v-model="info.address">
+          <option value="">plz choose</option>
+          <option value="beijing">beijing</option>
+          <option value="shanghai">shanghai</option>
+          <option value="guangzhou">guangzhou</option>
+        </select>
+      </div>
+      <div>
+        other:
+        <textarea v-model.lazy="info.other"></textarea>
+      </div>
+      <div>
+        <input type="checkbox" v-model="info.ck"> agree <a href="javascript:;">agreement</a>
+      </div>
+      <button>submit</button>
+    </form>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        info: {
+          account: '',
+          password: '',
+          phone: '',
+          sex: '',
+          hobby: [],
+          address: '',
+          other: '',
+          ck: false
+        }
+      },
+      methods: {
+        demo(e) {
+          alert(JSON.stringify(this.info));
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>

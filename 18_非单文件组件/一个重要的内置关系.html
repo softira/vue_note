@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>一个重要的内置关系</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+  <style>
+    #root {
+      width: 300px;
+      padding: 10px;
+      background: #ccc;
+      margin: 0 auto;
+      margin-top: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 
+    1.一个重要的内置关系：VueComponent.prototype.__proto__ === Vue.prototype
+    2.为什么要有这个关系：让组件实例对象（vc）可以访问到Vue原型上的属性、方法
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <school></school>
+  </div>
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+    Vue.prototype.x = 99
+
+    // 定义school组件
+    const school = Vue.extend({
+      template: `
+        <div>
+          <h2>name:{{university}}</h2>
+          <p>age:{{address}}</p>
+          <button @click="show">show</button>
+        </div>
+      `,
+      data() {
+        return {
+          university: 'cqnu',
+          address: 'chongqing'
+        }
+      },
+      methods: {
+        show(){
+          console.log(this.x);
+        }
+      }
+    })
+
+
+    // 创建一个 Vue 实例
+    new Vue({
+      el: '#root',
+      components: {
+        school
+      }
+    })
+  </script>
+</body>
+
+</html>

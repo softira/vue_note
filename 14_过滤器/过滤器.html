@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>过滤器</title>
+  <!-- IMPORT Vue -->
+  <script src="../js/vue.js"></script>
+  <script src="../js/dayjs.min.js"></script>
+</head>
+<style>
+  #root {
+    width: 300px;
+    padding: 10px;
+    background: #ccc;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+</style>
+
+<body>
+  <!-- 
+    过滤器：
+      定义：对要显示的数据进行特定格式化后再显示（适用于一些简单逻辑的处理）。
+      语法：
+        1.注册过滤器：Vue.filter(过滤器名称,过滤器函数)或new Vue{filters:{}}
+        2.使用过滤器：{{数据|过滤器名称}}或v-bind:"数据|过滤器名称"
+      备注：
+        1.过滤器也可以接收额外参数、多个过滤器也可以串联
+        2.并没有改变原本的数据
+   -->
+  <!-- 准备好一个容器 -->
+  <div id="root">
+    <p>timestamp:{{time}}</p>
+    <p>computed:{{comTime}}</p>
+    <p>methods:{{formatTime(time)}}</p>
+    <p>filters:{{time | timeFormat}}</p>
+    <p>filters:{{time | timeFormat('YYYY.MM.DD')}}</p>
+    <p>filters:{{time | timeFormat('YYYY.MM.DD') | mySlice}}</p>
+  </div>
+
+  <!-- IMPROT JS -->
+  <script>
+    Vue.config.productionTip = false; // 阻止 vue 在启动时生成生产提示
+    // 全局过滤器
+    Vue.filter('mySlice', function (val) {
+      return val.slice(0, 4);
+    });
+
+    const vm = new Vue({
+      el: '#root',
+      data: {
+        time: Date.now(),
+      },
+      computed: {
+        comTime() {
+          return dayjs(this.time).format('YYYY-MM-DD HH:mm:ss');
+        }
+      },
+      methods: {
+        formatTime(val) {
+          return dayjs(val).format('YYYY年MM月DD日 HH:mm:ss');
+        }
+      },
+      // 局部过滤器
+      filters: {
+        timeFormat(val, str = 'YYYY.MM.DD') {
+          return dayjs(val).format(str);
+        },
+      }
+    })
+  </script>
+</body>
+
+</html>
